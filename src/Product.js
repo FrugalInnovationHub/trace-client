@@ -32,7 +32,6 @@ class Product extends Component {
       });
     }
 
-
     // Create payload
     const payload = {
       productName,
@@ -40,6 +39,8 @@ class Product extends Component {
       category,
       manufacturer
     };
+
+    document.getElementById("product-form").reset();
 
     console.log(payload);
   }
@@ -56,24 +57,28 @@ class Product extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} id="product-form">
           <div>
             <label htmlFor="productName">
               Product Name
             </label>
-            <input type='text' name='productName' placeholder='Enter Product Name' required/>
+            <input type="text" name="productName" placeholder="Enter Product Name" required/>
           </div>
           <div>
             <label htmlFor="productNumber">
               Product Number
             </label>
-            <input type='text' name='productNumber' placeholder='Enter Product Number' required/>
+            <input type="text" name="productNumber" placeholder="Enter Product Number" required/>
           </div>
           <div>
             <label htmlFor="category">
               Category
             </label>
-            <input type='text' name='category' placeholder='Enter Category' required/>
+            <select name="category">
+              <option value="supply">Supply</option>
+              <option value="biomed">BioMed</option>
+              <option value="dme">DME</option>
+            </select>
           </div>
           {
             this.state.manufacturers.map(function(manufacturer, index) {
