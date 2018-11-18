@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Product from './Product.js';
+import { Container, Header } from 'semantic-ui-react'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <p className="App-intro">
-          Hello Medshare!
-        </p>
+      <Container>
+        <Header as='h1' textAlign = 'center' color='teal'>MedShare</Header>
         <Product />
-      </div>
+      </Container>
     );
   }
 }

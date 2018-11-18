@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import SerializeForm from 'form-serialize';
 import Manufacturer from './Manufacturer.js';
+import {  Form, Button, Segment } from 'semantic-ui-react';
+
+
+const options = [
+  { key: 's', text: 'Supply', value: 'supply' },
+  { key: 'b', text: 'BioMed', value: 'biomed' },
+  { key: 'd', text: 'DME', value: 'dme' },
+];
 
 class Product extends Component {
   constructor(props) {
@@ -56,43 +64,36 @@ class Product extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit} id="product-form">
-          <div>
+      <Segment>
+        <Form onSubmit={this.handleSubmit} id="product-form">
+          <Form.Field required>
             <label htmlFor="productName">
               Product Name
             </label>
             <input type="text" name="productName" placeholder="Enter Product Name" required/>
-          </div>
-          <div>
-            <label htmlFor="productNumber">
-              Product Number
-            </label>
-            <input type="text" name="productNumber" placeholder="Enter Product Number" required/>
-          </div>
-          <div>
-            <label htmlFor="category">
-              Category
-            </label>
-            <select name="category">
-              <option value="supply">Supply</option>
-              <option value="biomed">BioMed</option>
-              <option value="dme">DME</option>
-            </select>
-          </div>
-          {
-            this.state.manufacturers.map(function(manufacturer, index) {
-              return <Manufacturer key={index}/>
-            })
-          }
-          <div>
-            <button onClick={this.handleClick}>Add Manufacturer</button>
-          </div>
-          <div>
-            <button>Add Product Details</button>
-          </div>
-        </form>
-      </div>
+          </Form.Field>
+          <Form.Group widths="equal">
+            <Form.Field required>
+              <label htmlFor="productNumber">
+                Product Number
+              </label>
+              <input type="text" name="productNumber" placeholder="Enter Product Number" required/>
+            </Form.Field>
+            <Form.Select fluid label='Category' options={options} name="category" placeholder='Category' searchInput={{ id: 'category' }} required/>
+          </Form.Group>
+          <Segment color="teal">
+            {
+              this.state.manufacturers.map(function(manufacturer, index) {
+                return (
+                    <Manufacturer key={index}/>
+                  );
+              })
+            }
+            <Button onClick={this.handleClick} color="teal">Add Manufacturer</Button>
+          </Segment>
+          <Button>Add Product Details</Button>
+        </Form>
+      </Segment>
     );
   }
 }
