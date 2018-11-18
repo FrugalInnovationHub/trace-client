@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import SerializeForm from 'form-serialize';
 import Manufacturer from './Manufacturer.js';
+import Api from './utils/MedshareAPI.js';
 import {  Form, Button, Segment } from 'semantic-ui-react';
 
-
-const options = [
-  { key: 's', text: 'Supply', value: 'supply' },
-  { key: 'b', text: 'BioMed', value: 'biomed' },
-  { key: 'd', text: 'DME', value: 'dme' },
-];
 
 class Product extends Component {
   constructor(props) {
@@ -48,9 +43,14 @@ class Product extends Component {
       manufacturer
     };
 
-    document.getElementById("product-form").reset();
-
-    console.log(payload);
+    Api.post(payload)
+    .then((response) => {
+      console.log('Succuess');
+      document.getElementById("product-form").reset();
+    })
+    .catch((error) => {
+      console.log('Error Occured, Try correct values');
+    });
   }
 
   handleClick(e) {
@@ -79,7 +79,16 @@ class Product extends Component {
               </label>
               <input type="text" name="productNumber" placeholder="Enter Product Number" required/>
             </Form.Field>
-            <Form.Select fluid label='Category' options={options} name="category" placeholder='Category' searchInput={{ id: 'category' }} required/>
+            <Form.Field>
+              <label htmlFor="category">
+                Category
+              </label>
+              <select name="category">
+                <option value="supply">Supply</option>
+                <option value="biomed">BioMed</option>
+                <option value="dme">DME</option>
+              </select>
+            </Form.Field>
           </Form.Group>
           <Segment>
             {
