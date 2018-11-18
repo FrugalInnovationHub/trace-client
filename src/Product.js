@@ -10,10 +10,6 @@ const options = [
   { key: 'd', text: 'DME', value: 'dme' },
 ];
 
-const style = {
-
-}
-
 class Product extends Component {
   constructor(props) {
     super(props);
