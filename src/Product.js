@@ -10,6 +10,10 @@ const options = [
   { key: 'd', text: 'DME', value: 'dme' },
 ];
 
+const style = {
+
+}
+
 class Product extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +68,7 @@ class Product extends Component {
 
   render() {
     return (
-      <Segment>
+      <Segment secondary style={{ marginTop: '2em' }}>
         <Form onSubmit={this.handleSubmit} id="product-form">
           <Form.Field required>
             <label htmlFor="productName">
@@ -81,7 +85,7 @@ class Product extends Component {
             </Form.Field>
             <Form.Select fluid label='Category' options={options} name="category" placeholder='Category' searchInput={{ id: 'category' }} required/>
           </Form.Group>
-          <Segment color="teal">
+          <Segment>
             {
               this.state.manufacturers.map(function(manufacturer, index) {
                 return (
@@ -89,9 +93,9 @@ class Product extends Component {
                   );
               })
             }
-            <Button onClick={this.handleClick} color="teal">Add Manufacturer</Button>
+            <Button onClick={this.handleClick}>Add Manufacturer</Button>
           </Segment>
-          <Button>Add Product Details</Button>
+          <Button color="teal">Add Product Details</Button>
         </Form>
       </Segment>
     );
