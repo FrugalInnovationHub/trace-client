@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Product from './Product.js';
+import Product from './product/Product.js';
 // import LoginForm from './LoginForm';
 import { Container, Header } from 'semantic-ui-react';
 import '../css/app.css';

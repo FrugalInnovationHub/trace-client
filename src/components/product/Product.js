@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import SerializeForm from 'form-serialize';
 import Manufacturer from './Manufacturer.js';
-import Api from '../utils/MedshareAPI.js';
-import {  Form, Button, Segment } from 'semantic-ui-react';
+import Api from '../../utils/MedshareAPI.js';
+import {  Form, Button, Segment, Header, Icon, Modal } from 'semantic-ui-react';
 
 
 class Product extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      manufacturers : [{}]
+      manufacturers : [{}],
+      successMessage : false,
+      message : '',
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleApiSuccess = this.handleApiSuccess.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleSubmit(e) {
@@ -45,8 +49,7 @@ class Product extends Component {
 
     Api.post(payload)
     .then((response) => {
-      console.log('Succuess');
-      document.getElementById("product-form").reset();
+      this.handleApiSuccess();
     })
     .catch((error) => {
       console.log('Error Occured, Try correct values');
@@ -62,8 +65,23 @@ class Product extends Component {
     });
   }
 
+  handleApiSuccess() {
+    this.setState({
+      successMessage: true,
+      message: 'Product added successfully'
+    });
+    document.getElementById("product-form").reset();
+  }
+
+  handleClose() {
+    this.setState({
+      successMessage: false
+    });
+  }
+
   render() {
     return (
+      <div>
       <Segment secondary style={{ marginTop: '2em' }}>
         <Form onSubmit={this.handleSubmit} id="product-form">
           <Form.Field required>
@@ -102,7 +120,28 @@ class Product extends Component {
           </Segment>
           <Button color="teal">Add Product Details</Button>
         </Form>
+
+
       </Segment>
+      {this.state.successMessage && (
+        <Modal
+          open={this.state.successMessage}
+          onClose={this.handleClose}
+          basic
+          size='small'
+        >
+          <Header as='h1'>Message</Header>
+          <Modal.Content>
+            <h3>{this.state.message}</h3>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color='green' onClick={this.handleClose} inverted>
+              <Icon name='checkmark' /> Got it
+            </Button>
+          </Modal.Actions>
+        </Modal>
+      )}
+      </div>
     );
   }
 }
