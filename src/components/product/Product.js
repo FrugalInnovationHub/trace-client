@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import SerializeForm from 'form-serialize';
+import {Form, Button, Segment, Header, Icon, Modal } from 'semantic-ui-react';
 import Manufacturer from './Manufacturer.js';
 import Api from '../../utils/MedshareAPI.js';
-import {  Form, Button, Segment, Header, Icon, Modal } from 'semantic-ui-react';
 
+
+const style = {
+  fontWeight: 300,
+  letterSpacing: 1.5,
+}
 
 class Product extends Component {
   constructor(props) {
@@ -70,6 +76,7 @@ class Product extends Component {
       successMessage: true,
       message: 'Product added successfully'
     });
+    // Rerender dom
     document.getElementById("product-form").reset();
   }
 
@@ -82,65 +89,74 @@ class Product extends Component {
   render() {
     return (
       <div>
-      <Segment secondary style={{ marginTop: '2em' }}>
-        <Form onSubmit={this.handleSubmit} id="product-form">
-          <Form.Field required>
-            <label htmlFor="productName">
-              Product Name
-            </label>
-            <input type="text" name="productName" placeholder="Enter Product Name" required/>
-          </Form.Field>
-          <Form.Group widths="equal">
-            <Form.Field required>
-              <label htmlFor="productNumber">
-                Product Number
-              </label>
-              <input type="text" name="productNumber" placeholder="Enter Product Number" required/>
-            </Form.Field>
-            <Form.Field>
-              <label htmlFor="category">
-                Category
-              </label>
-              <select name="category">
-                <option value="supply">Supply</option>
-                <option value="biomed">BioMed</option>
-                <option value="dme">DME</option>
-              </select>
-            </Form.Field>
-          </Form.Group>
-          <Segment>
-            {
-              this.state.manufacturers.map(function(manufacturer, index) {
-                return (
-                    <Manufacturer key={index}/>
-                  );
-              })
-            }
-            <Button onClick={this.handleClick}>Add Manufacturer</Button>
-          </Segment>
-          <Button color="teal">Add Product Details</Button>
-        </Form>
-
-
-      </Segment>
-      {this.state.successMessage && (
-        <Modal
-          open={this.state.successMessage}
-          onClose={this.handleClose}
-          basic
-          size='small'
-        >
-          <Header as='h1'>Message</Header>
-          <Modal.Content>
-            <h3>{this.state.message}</h3>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button color='green' onClick={this.handleClose} inverted>
-              <Icon name='checkmark' /> Got it
+        <Header as='h1' textAlign = 'center' color='teal' style={style}>MedShare</Header>
+          <Segment.Inline clearing style={{ paddingBottom: '1.5em' }}>
+            <Button animated bordered color='teal' as={ Link } to='/product' floated='right'>
+              <Button.Content visible>Show Products</Button.Content>
+              <Button.Content hidden>
+                <Icon name='arrow right' />
+              </Button.Content>
             </Button>
-          </Modal.Actions>
-        </Modal>
-      )}
+          </Segment.Inline>
+        <Segment secondary style={{ marginTop: '2em' }}>
+          <Form onSubmit={this.handleSubmit} id="product-form">
+            <Form.Field required>
+              <label htmlFor="productName">
+                Product Name
+              </label>
+              <input type="text" name="productName" placeholder="Enter Product Name" required/>
+            </Form.Field>
+            <Form.Group widths="equal">
+              <Form.Field required>
+                <label htmlFor="productNumber">
+                  Product Number
+                </label>
+                <input type="text" name="productNumber" placeholder="Enter Product Number" required/>
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="category">
+                  Category
+                </label>
+                <select name="category">
+                  <option value="supply">Supply</option>
+                  <option value="biomed">BioMed</option>
+                  <option value="dme">DME</option>
+                </select>
+              </Form.Field>
+            </Form.Group>
+            <Segment>
+              {
+                this.state.manufacturers.map(function(manufacturer, index) {
+                  return (
+                      <Manufacturer key={index}/>
+                    );
+                })
+              }
+              <Button onClick={this.handleClick}>Add Manufacturer</Button>
+            </Segment>
+            <Button color="teal">Add Product Details</Button>
+          </Form>
+        </Segment>
+        {this.state.successMessage && (
+          <Modal
+            open={this.state.successMessage}
+            onClose={this.handleClose}
+            basic
+            size='small'
+          >
+            <Header as='h1'>Message</Header>
+            <Modal.Content>
+              <h3>{this.state.message}</h3>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button color='green' onClick={this.handleClose} inverted>
+                <Icon name='checkmark' /> Got it
+              </Button>
+            </Modal.Actions>
+          </Modal>
+        )}
+
+
       </div>
     );
   }
