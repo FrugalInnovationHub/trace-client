@@ -37,7 +37,7 @@ class ShowProduct extends Component {
       <div>
         <Header as='h1' textAlign = 'center' color='teal' style={style}>Product List</Header>
         <Segment.Inline clearing style={{ paddingBottom: '3em' }}>
-          <Button animated bordered color='teal' as={ Link } to='/' floated='right'>
+          <Button animated bordered color='teal' as={ Link } to='/product' floated='right'>
             <Button.Content visible>Previous</Button.Content>
             <Button.Content hidden>
               <Icon name='left arrow' />
