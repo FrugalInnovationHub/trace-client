@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Container style={{ marginTop: '3em' }}>
+        <Container>
           <Route exact path="/" render={() => ( <LoginForm />)} />
           <Route exact path="/product" render={() => ( <Product />)} />
           <Route exact path="/product/show" render={() => ( <ShowProduct /> )}/>

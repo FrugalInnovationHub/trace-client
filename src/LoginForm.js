@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react';
 
 const LoginForm = () => (
-  <div className='login-form'>
+  <div className='login-form' style={{ paddingTop: '20%' }}>
     <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' color='teal' textAlign='center'>
-          Log-in to your account
+          Log-in
         </Header>
         <Form size='large'>
           <Segment>

@@ -34,7 +34,7 @@ class ShowProduct extends Component {
   render() {
     let products = this.state.products;
     return(
-      <div>
+      <div style={{ paddingTop: '3em' }}>
         <Header as='h1' textAlign = 'center' color='teal' style={style}>Product List</Header>
         <Segment.Inline clearing style={{ paddingBottom: '3em' }}>
           <Button animated bordered color='teal' as={ Link } to='/product' floated='right'>
@@ -63,8 +63,8 @@ class ShowProduct extends Component {
                       <Table.Cell>{ele.product_name}</Table.Cell>
                       <Table.Cell>{ele.product_id}</Table.Cell>
                       <Table.Cell>{ele.category}</Table.Cell>
-                      <Table.Cell>{ele.manufacturer_id}</Table.Cell>
                       <Table.Cell>{ele.manufacturer_name}</Table.Cell>
+                      <Table.Cell>{ele.manufacturer_id}</Table.Cell>
                     </Table.Row>
                   );
                 })

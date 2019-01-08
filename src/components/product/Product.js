@@ -113,7 +113,7 @@ class Product extends Component {
   render() {
     // const {selcted} = this.state;
     return (
-      <div>
+      <div style={{ paddingTop: '3em' }}>
         <Header as='h1' textAlign = 'center' color='teal' style={style}>MedShare</Header>
           <Segment.Inline clearing style={{ paddingBottom: '1.5em' }}>
             <Button animated bordered color='teal' as={ Link } to='/product/show' floated='right'>
