@@ -6,11 +6,6 @@ import Manufacturer from './Manufacturer.js';
 import Api from '../../utils/MedshareAPI.js';
 
 
-const style = {
-  fontWeight: 300,
-  letterSpacing: 1.5,
-};
-
 // const countryOptions = [ { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }];
 const skillsOptions = [
   { key: 'Beds, Electric, Used, w/o Mattress', text: 'Beds, Electric, Used, w/o Mattress', value: 'Beds, Electric, Used, w/o Mattress' },
@@ -113,8 +108,7 @@ class Product extends Component {
   render() {
     // const {selcted} = this.state;
     return (
-      <div style={{ paddingTop: '3em' }}>
-        <Header as='h1' textAlign = 'center' color='teal' style={style}>MedShare</Header>
+      <div style={{ paddingTop: '5em' }}>
           <Segment.Inline clearing style={{ paddingBottom: '1.5em' }}>
             <Button animated bordered color='teal' as={ Link } to='/product/show' floated='right'>
               <Button.Content visible>Show Products</Button.Content>

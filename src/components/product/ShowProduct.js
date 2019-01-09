@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { Segment, Table, Header, Button, Icon } from 'semantic-ui-react';
+import { Segment, Table, Button, Icon } from 'semantic-ui-react';
 const axios = require('axios');
-const style = {
-  fontWeight: 300,
-  letterSpacing: 1.5,
-}
+
 
 
 class ShowProduct extends Component {
@@ -31,11 +28,11 @@ class ShowProduct extends Component {
   componentDidMount() {
     this.getProduct();
   }
+
   render() {
     let products = this.state.products;
     return(
-      <div style={{ paddingTop: '3em' }}>
-        <Header as='h1' textAlign = 'center' color='teal' style={style}>Product List</Header>
+      <div style={{ paddingTop: '5em' }}>
         <Segment.Inline clearing style={{ paddingBottom: '3em' }}>
           <Button animated bordered color='teal' as={ Link } to='/product' floated='right'>
             <Button.Content visible>Previous</Button.Content>
