@@ -6,8 +6,6 @@ import API_URL from '../../utils/constants.js';
 
 
 const auth = new AuthService();
-const axios = require('axios');
-
 
 class ShowProduct extends Component {
   constructor(props) {
@@ -20,25 +18,8 @@ class ShowProduct extends Component {
     .then((data) => {
       this.setState({products : data});
     });
-    this.getProduct = this.getProduct.bind(this);
   }
 
-  // See these later
-  getProduct() {
-    // const scope = this;
-    // axios.get('http://localhost:3001/api/product/')
-    // .then(function(response) {
-    //   scope.setState({products : response.data});
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
-  }
-
-  // See these later
-  componentDidMount() {
-    this.getProduct();
-  }
 
   render() {
     let products = this.state.products;
@@ -53,7 +34,7 @@ class ShowProduct extends Component {
           </Button>
         </Segment.Inline>
         <Segment style={{ marginTop: '3em', marginBottom: '3em' }}>
-          <Table celled>
+          <Table celled selectable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Product Name</Table.HeaderCell>
@@ -65,9 +46,9 @@ class ShowProduct extends Component {
             </Table.Header>
             <Table.Body>
               {
-                products.map(function(ele,index){
+                this.state.products.length > 0 ? (products.map(function(ele,index){
                   return (
-                    <Table.Row key={index}>
+                    <Table.Row key={ele.id}>
                       <Table.Cell>{ele.product_name}</Table.Cell>
                       <Table.Cell>{ele.product_id}</Table.Cell>
                       <Table.Cell>{ele.value}</Table.Cell>
@@ -76,6 +57,8 @@ class ShowProduct extends Component {
                     </Table.Row>
                   );
                 })
+                ) : (
+                <p></p>)
               }
             </Table.Body>
           </Table>
