@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import { isTokenExpired } from './jwtHelper';
 
-import { API_URL } from './constants';
+import API_URL  from './constants';
 
 export default class AuthService extends EventEmitter {
   constructor() {
