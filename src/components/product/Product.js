@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import SerializeForm from 'form-serialize';
 import {Form, Button, Segment, Header, Icon, Modal, Dropdown } from 'semantic-ui-react';
 import Manufacturer from './Manufacturer.js';
-import Api from '../../utils/MedshareAPI.js';
 import AuthService from '../../utils/AuthService.js';
 import API_URL from '../../utils/constants.js';
 
@@ -172,7 +171,6 @@ class Product extends Component {
       manufacturer
     };
 
-    console.log('data to send in payload', payload);
     auth.fetch(`${API_URL}/product/`, {
       method: 'POST',
       body: JSON.stringify(payload)
@@ -215,7 +213,7 @@ class Product extends Component {
 
   render() {
     // const {selcted} = this.state;
-    console.log('state', this.state);
+    // console.log('state', this.state);
     return (
       <div style={{ paddingTop: '5em' }}>
           <Segment.Inline clearing style={{ paddingBottom: '1.5em' }}>
