@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import { Segment, Table, Button, Icon } from 'semantic-ui-react';
 import AuthService from '../../utils/AuthService.js';
 import API_URL from '../../utils/constants.js';
+import { CSVLink } from "react-csv";
+
+const headers = [
+  { label: "Product Name", key: "product_name" },
+  { label: "Product Number", key: "product_id" },
+  { label: "Value", key: "value" },
+  { label: "Manufacturer Name", key: "manufacturer_name" },
+  { label: "Manufacturer Number", key: "manufacturer_id" }
+];
 
 
 const auth = new AuthService();
@@ -20,7 +29,6 @@ class ShowProduct extends Component {
     });
   }
 
-
   render() {
     let products = this.state.products;
     return(
@@ -32,6 +40,12 @@ class ShowProduct extends Component {
               <Icon name='left arrow' />
             </Button.Content>
           </Button>
+          <CSVLink
+            data={products}
+            headers={headers}
+            className="ui basic teal button right floated">
+            Download
+          </CSVLink>
         </Segment.Inline>
         <Segment style={{ marginTop: '3em', marginBottom: '3em' }}>
           <Table celled selectable>
@@ -58,7 +72,7 @@ class ShowProduct extends Component {
                   );
                 })
                 ) : (
-                <p></p>)
+                <p>No entries yet.</p>)
               }
             </Table.Body>
           </Table>
