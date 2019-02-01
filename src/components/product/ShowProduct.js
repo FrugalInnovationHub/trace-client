@@ -66,9 +66,15 @@ class ShowProduct extends Component {
   }
 
   modalClose() {
-    this.setState({
-      openModal: false
-    });
+    setTimeout(() => {
+      auth.fetch(`${API_URL}/product/`)
+        .then((data) => {
+          this.setState({
+            products : data ,
+            openModal: false
+          });
+        });
+    }, 100);
   }
 
   render() {
@@ -148,7 +154,7 @@ class ShowProduct extends Component {
             open={this.state.openModal}
             onClose={this.modalClose}
           >
-            <UpdateModal element={current.state.element}/>
+            <UpdateModal element={current.state.element} handleModal={this.modalClose}/>
           </Modal>
         )}
       </div>
