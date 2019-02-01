@@ -34,17 +34,17 @@ class UpdateModal extends Component {
       manufacturerId
     };
 
-    auth.fetch(`${API_URL}/product/`, {
-      method: 'PUT',
-      body: JSON.stringify(payload)
-    })
-    .then((result) => {
-      if (result.error) {
-        console.log('Error Occured',result.error);
-        return;
-      }
-      console.log('Data Updated');
-    });
+    // auth.fetch(`${API_URL}/product/`, {
+    //   method: 'PUT',
+    //   body: JSON.stringify(payload)
+    // })
+    // .then((result) => {
+    //   if (result.error) {
+    //     console.log('Error Occured',result.error);
+    //     return;
+    //   }
+    //   console.log('Data Updated');
+    // });
   }
 
   componentDidMount() {
