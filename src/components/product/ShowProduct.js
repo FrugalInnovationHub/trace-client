@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { Segment, Table, Button, Icon } from 'semantic-ui-react';
+import { Segment, Table, Button, Icon, Modal } from 'semantic-ui-react';
 import AuthService from '../../utils/AuthService.js';
 import API_URL from '../../utils/constants.js';
 import { CSVLink } from "react-csv";
+import UpdateModal from "./Modal";
 
 const headers = [
   { label: "Product Name", key: "product_name" },
@@ -20,21 +21,23 @@ class ShowProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: []
+      products: [],
+      openModal: false,
+      element : []
     };
     // Use parentCode to create a dropdown list later on
     auth.fetch(`${API_URL}/product/`)
     .then((data) => {
       this.setState({products : data});
     });
-
+    this.modalClose = this.modalClose.bind(this);
+    this.handleModal = this.handleModal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDeleteSuccess = this.handleDeleteSuccess.bind(this);
   }
 
   handleDelete(e,ele) {
     e.preventDefault();
-    console.log(ele);
     auth.fetch(`${API_URL}/product?id=${ele.id}`, {
       method: 'DELETE'
     })
@@ -43,7 +46,6 @@ class ShowProduct extends Component {
         console.log('Error Occured',result.error);
         return;
       }
-      console.log('Maza aa gaya');
       this.handleDeleteSuccess();
     });
   }
@@ -55,26 +57,38 @@ class ShowProduct extends Component {
     });
   }
 
+  handleModal(e, ele) {
+    e.preventDefault();
+    this.setState({
+      openModal: true,
+      element : ele
+    });
+  }
+
+  modalClose() {
+    this.setState({
+      openModal: false
+    });
+  }
+
   render() {
     let products = this.state.products;
     let current = this;
     return(
       <div style={{ paddingTop: '5em' }}>
-        <Segment.Inline clearing style={{ paddingBottom: '3em' }}>
-          <Button animated bordered color='teal' as={ Link } to='/product' floated='right'>
-            <Button.Content visible>Previous</Button.Content>
-            <Button.Content hidden>
-              <Icon name='left arrow' />
-            </Button.Content>
-          </Button>
-          <CSVLink
-            data={products}
-            headers={headers}
-            className="ui basic teal button right floated">
-            Download
-          </CSVLink>
-        </Segment.Inline>
-        <Segment style={{ marginTop: '3em', marginBottom: '3em' }}>
+        <Button animated color='teal' as={ Link } to='/product' floated='right'>
+          <Button.Content visible>Previous</Button.Content>
+          <Button.Content hidden>
+            <Icon name='left arrow' />
+          </Button.Content>
+        </Button>
+        <CSVLink
+          data={products}
+          headers={headers}
+          className="ui basic teal button right floated">
+          Download
+        </CSVLink>
+        <Segment style={{ marginTop: '3.5em', marginBottom: '3em' }}>
           <Table celled>
             <Table.Header>
               <Table.Row>
@@ -108,7 +122,7 @@ class ShowProduct extends Component {
                       <Table.Cell textAlign='center'>{ele.manufacturer_id}</Table.Cell>
                       <Table.Cell textAlign='center'>
                         <Button.Group size='mini'>
-                          <Button basic color='teal'>
+                          <Button basic color='teal' onClick={(e) => current.handleModal(e, ele)}>
                               <Icon name='edit' />
                           </Button>
                           <Button.Or />
@@ -121,11 +135,22 @@ class ShowProduct extends Component {
                   );
                 })
                 ) : (
-                <p>No entries yet.</p>)
+                <Table.Row>
+                  <Table.Cell>No Entries yet.</Table.Cell>
+                </Table.Row>
+                )
               }
             </Table.Body>
           </Table>
         </Segment>
+        {this.state.openModal && (
+          <Modal
+            open={this.state.openModal}
+            onClose={this.modalClose}
+          >
+            <UpdateModal element={current.state.element}/>
+          </Modal>
+        )}
       </div>
     )
   }
