@@ -56,6 +56,17 @@ class ShowProduct extends Component {
                 <Table.HeaderCell>Value</Table.HeaderCell>
                 <Table.HeaderCell>Manufacturer Name</Table.HeaderCell>
                 <Table.HeaderCell>Manufacturer Number</Table.HeaderCell>
+                <Table.HeaderCell>
+                  <Button.Group size='mini'>
+                    <Button basic color='teal'>
+                      Edit
+                    </Button>
+                    <Button.Or />
+                    <Button basic color='red'>
+                      Delete
+                    </Button>
+                  </Button.Group>
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -68,6 +79,17 @@ class ShowProduct extends Component {
                       <Table.Cell>{ele.value}</Table.Cell>
                       <Table.Cell>{ele.manufacturer_name}</Table.Cell>
                       <Table.Cell>{ele.manufacturer_id}</Table.Cell>
+                      <Table.Cell>
+                        <Button.Group size='mini'>
+                          <Button basic color='teal'>
+                              <Icon name='edit' />
+                          </Button>
+                          <Button.Or />
+                          <Button basic color='red'>
+                            <Icon name='delete' />
+                          </Button>
+                        </Button.Group>
+                      </Table.Cell>
                     </Table.Row>
                   );
                 })
