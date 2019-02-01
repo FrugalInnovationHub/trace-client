@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Form, Button, Segment, Modal, Dropdown} from 'semantic-ui-react';
 import SerializeForm from 'form-serialize';
 import dropdownOptions from './dropDownOptions.js';
+import AuthService from '../../utils/AuthService.js';
+import API_URL from '../../utils/constants.js';
+const auth = new AuthService();
 
 class UpdateModal extends Component {
   constructor(props) {
@@ -24,13 +27,24 @@ class UpdateModal extends Component {
     const values = SerializeForm(e.target, { hash: true });
     const { productNumber, productValue, manufacturerName, manufacturerId } = values;
     const payload = {
+      id: this.props.element.id,
       productNumber,
       value : productValue,
       manufacturerName,
       manufacturerId
     };
 
-    document.getElementById("product-form").reset();
+    auth.fetch(`${API_URL}/product/`, {
+      method: 'PUT',
+      body: JSON.stringify(payload)
+    })
+    .then((result) => {
+      if (result.error) {
+        console.log('Error Occured',result.error);
+        return;
+      }
+      console.log('Data Updated');
+    });
   }
 
   componentDidMount() {

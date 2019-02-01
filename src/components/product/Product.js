@@ -117,15 +117,13 @@ class Product extends Component {
     // console.log('state', this.state);
     return (
       <div style={{ paddingTop: '5em' }}>
-          <Segment.Inline clearing style={{ paddingBottom: '1.5em' }}>
-            <Button animated bordered color='teal' as={ Link } to='/product/show' floated='right'>
-              <Button.Content visible>Show Products</Button.Content>
-              <Button.Content hidden>
-                <Icon name='arrow right' />
-              </Button.Content>
-            </Button>
-          </Segment.Inline>
-        <Segment secondary style={{ marginTop: '2em' }}>
+        <Button animated color='teal' as={ Link } to='/product/show' floated='right'>
+          <Button.Content visible>Show Products</Button.Content>
+          <Button.Content hidden>
+            <Icon name='arrow right' />
+          </Button.Content>
+        </Button>
+        <Segment secondary style={{ marginTop: '3.5em' }}>
           <Form onSubmit={this.handleSubmit} id="product-form">
             <Form.Field required>
               <label htmlFor="productName">
@@ -146,7 +144,7 @@ class Product extends Component {
                 <label htmlFor="productNumber">
                   Product Number
                 </label>
-                <input type="text" name="productNumber" placeholder="Enter Product Number" value={this.state.dropDown} required/>
+                <input type="text" name="productNumber" placeholder="Enter Product Number" value={this.state.dropDown} readOnly required/>
               </Form.Field>
               <Form.Field>
                 <label htmlFor="category">
