@@ -27,10 +27,37 @@ class ShowProduct extends Component {
     .then((data) => {
       this.setState({products : data});
     });
+
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeleteSuccess = this.handleDeleteSuccess.bind(this);
+  }
+
+  handleDelete(e,ele) {
+    e.preventDefault();
+    console.log(ele);
+    auth.fetch(`${API_URL}/product?id=${ele.id}`, {
+      method: 'DELETE'
+    })
+    .then(result => {
+      if (result.error) {
+        console.log('Error Occured',result.error);
+        return;
+      }
+      console.log('Maza aa gaya');
+      this.handleDeleteSuccess();
+    });
+  }
+
+  handleDeleteSuccess() {
+    auth.fetch(`${API_URL}/product/`)
+    .then((data) => {
+      this.setState({products : data});
+    });
   }
 
   render() {
     let products = this.state.products;
+    let current = this;
     return(
       <div style={{ paddingTop: '5em' }}>
         <Segment.Inline clearing style={{ paddingBottom: '3em' }}>
@@ -48,15 +75,15 @@ class ShowProduct extends Component {
           </CSVLink>
         </Segment.Inline>
         <Segment style={{ marginTop: '3em', marginBottom: '3em' }}>
-          <Table celled selectable>
+          <Table celled>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Product Name</Table.HeaderCell>
-                <Table.HeaderCell>Product Number</Table.HeaderCell>
-                <Table.HeaderCell>Value</Table.HeaderCell>
-                <Table.HeaderCell>Manufacturer Name</Table.HeaderCell>
-                <Table.HeaderCell>Manufacturer Number</Table.HeaderCell>
-                <Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Product Number</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Value</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Manufacturer Name</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Manufacturer Number</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>
                   <Button.Group size='mini'>
                     <Button basic color='teal'>
                       Edit
@@ -75,17 +102,17 @@ class ShowProduct extends Component {
                   return (
                     <Table.Row key={ele.id}>
                       <Table.Cell>{ele.product_name}</Table.Cell>
-                      <Table.Cell>{ele.product_id}</Table.Cell>
-                      <Table.Cell>{ele.value}</Table.Cell>
-                      <Table.Cell>{ele.manufacturer_name}</Table.Cell>
-                      <Table.Cell>{ele.manufacturer_id}</Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell textAlign='center'>{ele.product_id}</Table.Cell>
+                      <Table.Cell textAlign='center'>{ele.value}</Table.Cell>
+                      <Table.Cell textAlign='center'>{ele.manufacturer_name}</Table.Cell>
+                      <Table.Cell textAlign='center'>{ele.manufacturer_id}</Table.Cell>
+                      <Table.Cell textAlign='center'>
                         <Button.Group size='mini'>
                           <Button basic color='teal'>
                               <Icon name='edit' />
                           </Button>
                           <Button.Or />
-                          <Button basic color='red'>
+                          <Button basic color='red'  onClick={(e) => current.handleDelete(e, ele)}>
                             <Icon name='delete' />
                           </Button>
                         </Button.Group>
