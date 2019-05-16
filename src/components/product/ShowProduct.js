@@ -103,6 +103,7 @@ class ShowProduct extends Component {
                 <Table.HeaderCell textAlign='center'>Value</Table.HeaderCell>
                 <Table.HeaderCell textAlign='center'>Manufacturer Name</Table.HeaderCell>
                 <Table.HeaderCell textAlign='center'>Manufacturer Number</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Image Available</Table.HeaderCell>
                 <Table.HeaderCell textAlign='center'>
                   <Button.Group size='mini'>
                     <Button basic color='teal'>
@@ -126,6 +127,7 @@ class ShowProduct extends Component {
                       <Table.Cell textAlign='center'>{ele.value}</Table.Cell>
                       <Table.Cell textAlign='center'>{ele.manufacturer_name}</Table.Cell>
                       <Table.Cell textAlign='center'>{ele.manufacturer_id}</Table.Cell>
+                      <Table.Cell textAlign='center'>{ele.image != null ? 'Yes' : 'No'}</Table.Cell>
                       <Table.Cell textAlign='center'>
                         <Button.Group size='mini'>
                           <Button basic color='teal' onClick={(e) => current.handleModal(e, ele)}>

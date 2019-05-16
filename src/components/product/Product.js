@@ -32,7 +32,7 @@ class Product extends Component {
       parentCode : [],
       takePhoto: false,
       files: [],
-      imgb64: "",
+      imgb64: null,
     };
 
     // Use parentCode to create a dropdown list later on
@@ -65,6 +65,7 @@ class Product extends Component {
     // const { productName, productNumber, category, manufacturerName, manufacturerId } = values;
     const { productNumber, category, manufacturerName, manufacturerId } = values;
     const manufacturer = [];
+    const imageData = this.state.imgb64;
     if (Array.isArray(manufacturerName) && Array.isArray(manufacturerId)) {
       manufacturerName.forEach((name, index) => {
         manufacturer.push({
@@ -83,7 +84,8 @@ class Product extends Component {
     const payload = {
       productNumber,
       category,
-      manufacturer
+      manufacturer,
+      imageData
     };
 
     auth.fetch(`${API_URL}/product/`, {
@@ -115,6 +117,8 @@ class Product extends Component {
       successMessage: true,
       message: 'Product added successfully',
       dropDown : '',
+      imgb64: null,
+      takePhoto: false,
     });
     // Rerender dom
     document.getElementById("product-form").reset();
