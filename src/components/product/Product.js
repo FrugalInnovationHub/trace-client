@@ -6,9 +6,19 @@ import Manufacturer from './Manufacturer.js';
 import AuthService from '../../utils/AuthService.js';
 import API_URL from '../../utils/constants.js';
 import dropdownOptions from './dropDownOptions';
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
+import FileBase64 from 'react-file-base64';
+const fs = require('fs');
 
 
 const auth = new AuthService();
+
+const style = {
+  captureImage: {
+    width: '100%',
+  }
+};
  
 
 class Product extends Component {
@@ -19,7 +29,10 @@ class Product extends Component {
       successMessage : false,
       message : '',
       dropDown : '',
-      parentCode : []
+      parentCode : [],
+      takePhoto: false,
+      files: [],
+      imgb64: "",
     };
 
     // Use parentCode to create a dropdown list later on
@@ -39,6 +52,7 @@ class Product extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleApiSuccess = this.handleApiSuccess.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.onTakePhotoClick = this.onTakePhotoClick.bind(this);
   }
 
   handleDropdown(e, { value }) {
@@ -112,6 +126,20 @@ class Product extends Component {
     });
   }
 
+
+  onTakePhoto (dataUri) {
+    // Do stuff with the dataUri photo...
+    this.setState({imgb64: dataUri})
+  }
+
+  getFiles(files){
+    this.setState({ imgb64: files.base64 })
+  }
+
+  onTakePhotoClick() {
+    this.setState({takePhoto: true})
+  }
+
   render() {
     // const {selcted} = this.state;
     // console.log('state', this.state);
@@ -166,6 +194,28 @@ class Product extends Component {
                 })
               }
               <Button onClick={this.handleClick}>Add Manufacturer</Button>
+            </Segment>
+            <Segment>
+              <Form.Field>
+                  <label htmlFor="productImage">
+                    Upload Product Image
+                  </label>
+                  {/*<input id= 'app' type='text' name='productImage' required/>*/}
+                  {/*<input type='Button' value='Upload Product Image' name='productImage' required/>*/}
+                  <button type="button" onClick={this.onTakePhotoClick}>Take a photo</button>
+                  <span> OR</span>
+                  <FileBase64
+                      multiple={ false }
+                      onDone={ this.getFiles.bind(this) } 
+                  />
+                  {this.state.takePhoto ? <Camera
+                                            onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+                                          /> : <div></div>}
+                  <img
+                    style={style.captureImage}
+                    src={this.state.imgb64}
+                  />
+                </Form.Field>
             </Segment>
             <Button color="teal">Add Product Details</Button>
           </Form>
