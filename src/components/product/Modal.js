@@ -4,7 +4,16 @@ import SerializeForm from 'form-serialize';
 import dropdownOptions from './dropDownOptions.js';
 import AuthService from '../../utils/AuthService.js';
 import API_URL from '../../utils/constants.js';
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
+import FileBase64 from 'react-file-base64';
 const auth = new AuthService();
+
+const style = {
+  captureImage: {
+    width: '100%',
+  }
+};
 
 function buildFileSelector(){
   const fileSelector = document.createElement('input');
@@ -17,11 +26,15 @@ class UpdateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropDown : ''
+      dropDown : '',
+      takePhoto: false,
+      files: [],
+      imgb64: null,
     };
 
     this.handleDropdown = this.handleDropdown.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onTakePhotoClick = this.onTakePhotoClick.bind(this);
   }
 
   handleDropdown(e, { value }) {
@@ -34,16 +47,16 @@ class UpdateModal extends Component {
     console.log('values: ',e.target);
     const values = SerializeForm(e.target, { hash: true });
     console.log('values: ',values);
+    const imageData = this.state.imgb64;
   
-    const { productNumber, productValue, manufacturerName, manufacturerId, productImage, manufacturerImage } = values;
+    const { productNumber, productValue, manufacturerName, manufacturerId } = values;
     const payload = {
       id: this.props.element.id,
       productNumber,
       value : productValue,
       manufacturerName,
       manufacturerId,
-      productImage,
-      manufacturerImage
+      imageData
     };
 
     auth.fetch(`${API_URL}/product/`, {
@@ -70,6 +83,19 @@ class UpdateModal extends Component {
   handleFileSelect = (e) => {
     e.preventDefault();
     this.fileSelector.click();
+  }
+
+  onTakePhoto (dataUri) {
+    // Do stuff with the dataUri photo...
+    this.setState({imgb64: dataUri})
+  }
+
+  getFiles(files){
+    this.setState({ imgb64: files.base64 })
+  }
+
+  onTakePhotoClick() {
+    this.setState({takePhoto: true})
   }
 
   render() {
@@ -125,7 +151,19 @@ class UpdateModal extends Component {
                 </label>
                 {/*<input id= 'app' type='text' name='productImage' required/>*/}
                 {/*<input type='Button' value='Upload Product Image' name='productImage' required/>*/}
-                <input type ='file' onClick={this.handleFileSelect} />
+                <button type="button" onClick={this.onTakePhotoClick}>Take a photo</button>
+                <span> OR</span>
+                <FileBase64
+                    multiple={ false }
+                    onDone={ this.getFiles.bind(this) } 
+                />
+                {this.state.takePhoto ? <Camera
+                                          onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+                                        /> : <div></div>}
+                <img
+                  style={style.captureImage}
+                  src={this.state.imgb64}
+                />
               </Form.Field>
               <Form.Field >
                {/* <label htmlFor="manufacturerImage">
