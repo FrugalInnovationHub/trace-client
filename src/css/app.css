@@ -1,3 +1,11 @@
 * {
   border-radius: 0px !important;
 }
+
+.MuiTableRow-root-120.MuiTableRow-head-123.MUIDataTableHeadRow-root-119 th:first-child{
+    display: none !important;
+}
+
+.MuiTableRow-root-120.MuiTableRow-hover-122.MUIDataTableBodyRow-root-172.MUIDataTableBodyRow-hover-173.MUIDataTableBodyRow-responsiveStacked-174 td:first-child{
+    display: none !important;
+}

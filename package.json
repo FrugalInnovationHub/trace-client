@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "form-serialize": "^0.7.2",
     "jwt-decode": "^2.2.0",
+    "mui-datatables": "^2.2.0",
     "react": "^16.5.2",
     "react-csv": "^1.0.19",
     "react-dom": "^16.5.2",

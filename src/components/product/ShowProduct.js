@@ -5,6 +5,7 @@ import AuthService from '../../utils/AuthService.js';
 import API_URL from '../../utils/constants.js';
 import { CSVLink } from "react-csv";
 import UpdateModal from "./Modal";
+import MUIDataTable from "mui-datatables";
 
 const headers = [
   { label: "Product Name", key: "product_name" },
@@ -17,6 +18,9 @@ const headers = [
 
 const auth = new AuthService();
 
+ const options = {
+ }
+
 class ShowProduct extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +32,18 @@ class ShowProduct extends Component {
     // Use parentCode to create a dropdown list later on
     auth.fetch(`${API_URL}/product/`)
     .then((data) => {
+      for(let i = 0;i<data.length;i++){
+        let current = this;
+        data[i].editDel = data[i]
+        if(data[i].image == null){
+          data[i].image = 'No'
+        }
+        else {
+          data[i].image = 'Yes'
+        }
+      }
       this.setState({products : data});
+      console.log(data)
     });
     this.modalClose = this.modalClose.bind(this);
     this.handleModal = this.handleModal.bind(this);
@@ -53,6 +68,16 @@ class ShowProduct extends Component {
   handleDeleteSuccess() {
     auth.fetch(`${API_URL}/product/`)
     .then((data) => {
+      for(let i = 0;i<data.length;i++){
+        let current = this;
+        data[i].editDel = data[i]
+        if(data[i].image == null){
+          data[i].image = 'No'
+        }
+        else {
+          data[i].image = 'Yes'
+        }
+      }
       this.setState({products : data});
     });
   }
@@ -69,6 +94,16 @@ class ShowProduct extends Component {
     setTimeout(() => {
       auth.fetch(`${API_URL}/product/`)
         .then((data) => {
+          for(let i = 0;i<data.length;i++){
+            let current = this;
+            data[i].editDel = data[i]
+            if(data[i].image == null){
+              data[i].image = 'No'
+            }
+            else {
+              data[i].image = 'Yes'
+            }
+          }
           this.setState({
             products : data ,
             openModal: false
@@ -78,6 +113,67 @@ class ShowProduct extends Component {
   }
 
   render() {
+    const columns = [
+      {
+       name: "product_id",
+       label: "Product Number",
+       options: {
+        filter: true,
+        sort: true,
+       }
+      },
+      {
+       name: "value",
+       label: "Value",
+       options: {
+        filter: true,
+        sort: true,
+       }
+      },
+      {
+       name: "manufacturer_name",
+       label: "Manufacturer Name",
+       options: {
+        filter: true,
+        sort: true,
+       }
+      },
+      {
+       name: "manufacturer_id",
+       label: "Manufacturer Number",
+       options: {
+        filter: true,
+        sort: true,
+       }
+      },
+      {
+        name: "image",
+        label: "Image Available",
+        options: {
+         filter: true,
+         sort: false,
+        }
+       },
+       {
+        name: "editDel",
+        label: "Actions",
+        options: {
+         filter: true,
+         sort: false,
+         customBodyRender: (value, tableMeta, updateValue) => (
+          <Button.Group size='mini'>
+            <Button basic color='teal' onClick={(e) => current.handleModal(e, value)}>
+                <Icon name='edit' />
+            </Button>
+            <Button.Or />
+            <Button basic color='red'  onClick={(e) => current.handleDelete(e, value)}>
+              <Icon name='delete' />
+            </Button>
+          </Button.Group>
+          )
+        }
+       },
+     ];
     let products = this.state.products;
     let current = this;
     return(
@@ -95,7 +191,7 @@ class ShowProduct extends Component {
           Download
         </CSVLink>
         <Segment style={{ marginTop: '3.5em', marginBottom: '3em' }}>
-          <Table celled>
+          {/* <Table celled>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Product Name</Table.HeaderCell>
@@ -117,7 +213,7 @@ class ShowProduct extends Component {
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
-            <Table.Body>
+            {/* <Table.Body>
               {
                 this.state.products.length > 0 ? (products.map(function(ele,index){
                   return (
@@ -148,8 +244,15 @@ class ShowProduct extends Component {
                 </Table.Row>
                 )
               }
-            </Table.Body>
-          </Table>
+            </Table.Body> 
+          </Table> */}
+
+          <MUIDataTable
+            title={"Product List"}
+            data={this.state.products}
+            columns={columns}
+            options={options}
+          />
         </Segment>
         {this.state.openModal && (
           <Modal
