@@ -4,7 +4,8 @@ import {
   Redirect,
   Route,
   Link,
-  withRouter
+  withRouter,
+  HashRouter
 } from "react-router-dom";
 import Product from './product/Product.js';
 import Login from './login/Login';
@@ -50,7 +51,7 @@ class App extends Component {
     return (
       <div>
         <Container>
-          <Router>
+          <HashRouter>
             <div>
               <Menu fixed='top' inverted color='teal' size='large'>
                 <Container>
@@ -73,7 +74,7 @@ class App extends Component {
               <PrivateRoute exact path='/product' component={Product} />
               <PrivateRoute exact path="/product/show" component={ShowProduct} />
             </div>
-          </Router>
+          </HashRouter>
         </Container>
       </div>
     );
