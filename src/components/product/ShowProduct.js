@@ -19,6 +19,9 @@ const headers = [
 const auth = new AuthService();
 
  const options = {
+   filterType: 'textField',
+   selectableRows: 'none',
+   responsive: 'scroll'
  }
 
 class ShowProduct extends Component {
