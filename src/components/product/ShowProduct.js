@@ -115,6 +115,14 @@ class ShowProduct extends Component {
   render() {
     const columns = [
       {
+        name: "product_name",
+        label: "Product Name",
+        options: {
+         filter: true,
+         sort: true,
+        }
+       },
+      {
        name: "product_id",
        label: "Product Number",
        options: {
