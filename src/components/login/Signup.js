@@ -14,9 +14,42 @@ class Signup extends Component {
       email: '',
       password: '',
       signupError: '',
+      emailValid: false,
+      formValid: false,
       redirectToReferrer: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUserInput=this.handleUserInput.bind(this);
+  }
+
+
+  handleUserInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: value},
+                  () => { this.validateField(name, value) });
+  }
+
+  validateField(fieldName, value) {
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+
+    switch(fieldName) {
+      case 'email':
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        emailValid = re.test(value);
+        emailValid ? this.setState({signupError: ''}) : this.setState({signupError: 'Email is invalid'});
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      emailValid: emailValid
+    });
+  }
+
+  errorClass(error) {
+    return(error.length === 0 ? '' : 'has-error');
   }
 
   handleSubmit(e) {
@@ -24,19 +57,21 @@ class Signup extends Component {
     const {email, password} = SerializeForm(e.target, { hash: true });
     this.setState({email, password});
     //Login user
-    auth.signup(email, password)
-    .then(result => {
-      if (!result.token) {
-        this.setState({loginError: result.message})
-        return;
-      }
+    if (this.state.emailValid){
+      auth.signup(email, password)
+      .then(result => {
+        if (!result.token) {
+          this.setState({signupError: result.message})
+          return;
+        }
 
-      auth.finishAuthentication(result.token);
-      this.setState(() => ({
-        redirectToReferrer: true
-      }));
+        auth.finishAuthentication(result.token);
+        this.setState(() => ({
+          redirectToReferrer: true
+        }));
 
-    });
+      });
+    }
   }
 
   render() {
@@ -52,12 +87,23 @@ class Signup extends Component {
             <Header as='h2' color='teal' textAlign='center'>
               Sign-Up
             </Header>
+
+            {
+                this.state.signupError && ( <div >{signupError}</div>)
+            }
+
             <Form size='large' onSubmit={this.handleSubmit} id="signup-form">
               <Segment>
-                <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' name='email'/>
+                <Form.Input 
+                  fluid icon='user' 
+                  iconPosition='left' 
+                  placeholder='E-mail address' 
+                  name='email'
+                  value={this.state.email}
+                  onChange={this.handleUserInput}
+                  />
                 <Form.Input
-                  fluid
-                  icon='lock'
+                  fluid icon='lock'
                   iconPosition='left'
                   placeholder='Password'
                   type='password'
@@ -73,9 +119,6 @@ class Signup extends Component {
                   Already a user?
                 </Button>
               </Segment>
-              {
-                this.state.signupError && ( <Message error list={[{signupError}]}/>)
-              }
             </Form>
           </Grid.Column>
         </Grid>
