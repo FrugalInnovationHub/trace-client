@@ -39,10 +39,10 @@ class ShowProduct extends Component {
         let current = this;
         data[i].editDel = data[i]
         if(data[i].image == null){
-          data[i].image = 'No'
+          data[i].isImage = 'No'
         }
         else {
-          data[i].image = 'Yes'
+          data[i].isImage = 'Yes'
         }
       }
       this.setState({products : data});
@@ -75,10 +75,10 @@ class ShowProduct extends Component {
         let current = this;
         data[i].editDel = data[i]
         if(data[i].image == null){
-          data[i].image = 'No'
+          data[i].isImage = 'No'
         }
         else {
-          data[i].image = 'Yes'
+          data[i].isImage = 'Yes'
         }
       }
       this.setState({products : data});
@@ -101,10 +101,10 @@ class ShowProduct extends Component {
             let current = this;
             data[i].editDel = data[i]
             if(data[i].image == null){
-              data[i].image = 'No'
+              data[i].isImage = 'No'
             }
             else {
-              data[i].image = 'Yes'
+              data[i].isImage = 'Yes'
             }
           }
           this.setState({
@@ -158,7 +158,7 @@ class ShowProduct extends Component {
        }
       },
       {
-        name: "image",
+        name: "isImage",
         label: "Image Available",
         options: {
          filter: true,

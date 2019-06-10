@@ -214,6 +214,9 @@ class Product extends Component {
                   />
                   {this.state.takePhoto ? <Camera
                                             onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+                                            idealFacingMode = {FACING_MODES.ENVIRONMENT}
+                                            isImageMirror = {false}
+                                            imageCompression = {0.5}
                                           /> : <div></div>}
                   <img
                     style={style.captureImage}

@@ -4,7 +4,7 @@ import SerializeForm from 'form-serialize';
 import dropdownOptions from './dropDownOptions.js';
 import AuthService from '../../utils/AuthService.js';
 import API_URL from '../../utils/constants.js';
-import Camera from 'react-html5-camera-photo';
+import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import FileBase64 from 'react-file-base64';
 const auth = new AuthService();
@@ -159,6 +159,9 @@ class UpdateModal extends Component {
                 />
                 {this.state.takePhoto ? <Camera
                                           onTakePhoto = { (dataUri) => { this.onTakePhoto(dataUri); } }
+                                          idealFacingMode = {FACING_MODES.ENVIRONMENT}
+                                          isImageMirror = {false}
+                                          imageCompression = {0.5}
                                         /> : <div></div>}
                 <img
                   style={style.captureImage}
