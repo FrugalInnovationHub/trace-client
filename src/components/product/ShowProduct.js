@@ -19,6 +19,9 @@ const headers = [
 const auth = new AuthService();
 
  const options = {
+   filterType: 'textField',
+   selectableRows: 'none',
+   responsive: 'scroll'
  }
 
 class ShowProduct extends Component {
@@ -36,10 +39,10 @@ class ShowProduct extends Component {
         let current = this;
         data[i].editDel = data[i]
         if(data[i].image == null){
-          data[i].image = 'No'
+          data[i].isImage = 'No'
         }
         else {
-          data[i].image = 'Yes'
+          data[i].isImage = 'Yes'
         }
       }
       this.setState({products : data});
@@ -72,10 +75,10 @@ class ShowProduct extends Component {
         let current = this;
         data[i].editDel = data[i]
         if(data[i].image == null){
-          data[i].image = 'No'
+          data[i].isImage = 'No'
         }
         else {
-          data[i].image = 'Yes'
+          data[i].isImage = 'Yes'
         }
       }
       this.setState({products : data});
@@ -98,10 +101,10 @@ class ShowProduct extends Component {
             let current = this;
             data[i].editDel = data[i]
             if(data[i].image == null){
-              data[i].image = 'No'
+              data[i].isImage = 'No'
             }
             else {
-              data[i].image = 'Yes'
+              data[i].isImage = 'Yes'
             }
           }
           this.setState({
@@ -114,6 +117,14 @@ class ShowProduct extends Component {
 
   render() {
     const columns = [
+      {
+        name: "product_name",
+        label: "Product Name",
+        options: {
+         filter: true,
+         sort: true,
+        }
+       },
       {
        name: "product_id",
        label: "Product Number",
@@ -147,7 +158,7 @@ class ShowProduct extends Component {
        }
       },
       {
-        name: "image",
+        name: "isImage",
         label: "Image Available",
         options: {
          filter: true,
